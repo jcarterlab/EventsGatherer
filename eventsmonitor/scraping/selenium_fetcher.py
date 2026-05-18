@@ -18,11 +18,9 @@ logger = logging.getLogger(__name__)
 # ----------------------------------------------------------------------
 
 def initialise_driver(config):
-    selenium_config = config.SELENIUM
-
-    headless = selenium_config['headless']
-    window_size = selenium_config['window_size']
-    user_agent = selenium_config['user_agent']
+    headless = config.SELENIUM_HEADLESS
+    window_size = config.SELENIUM_WINDOW_SIZE
+    user_agent = config.SELENIUM_USER_AGENT
 
     logger.info(
         'Creating Chrome driver headless=%s window_size=%s',

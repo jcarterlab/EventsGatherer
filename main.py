@@ -1,8 +1,11 @@
 import logging
 import config
 
+from google import genai
+
 from eventsmonitor.scrape_content import scrape_content
 from eventsmonitor.email_summary import send_email
+from eventsmonitor.summarise_content import summarise_content
 
 
 # ----------------------------------------------------------------------
@@ -21,9 +24,10 @@ logger = logging.getLogger(__name__)
 # MAIN PIPELINE
 # ----------------------------------------------------------------------
 
-def run_pipeline(config):
+def run_pipeline(client, config):
     text = scrape_content(config)
-    send_email(text, config.TO_EMAIL, config)
+    summary = summarise_content(client, text, config)
+    send_email(summary, config.TO_EMAIL, config)
 
 
 
@@ -32,4 +36,5 @@ def run_pipeline(config):
 # ----------------------------------------------------------------------
 
 if __name__ == '__main__':
-    run_pipeline(config)
+    client = genai.Client(api_key=config.GEMINI_API_KEY)
+    run_pipeline(client, config)
