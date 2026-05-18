@@ -5,8 +5,11 @@ import json
 
 load_dotenv()
 
-ENVIRONMENT = os.getenv('ENVIRONMENT', 'development') # development or production
+# --------------------------------------------------
+# Environment
+# --------------------------------------------------
 
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development') # development or production
 
 
 # --------------------------------------------------
@@ -14,9 +17,8 @@ ENVIRONMENT = os.getenv('ENVIRONMENT', 'development') # development or productio
 # --------------------------------------------------
 
 LOCATION = os.getenv('LOCATION', 'London') # location
-ENTITY_OF_CONCERN = os.getenv('ENTITY_OF_CONCERN', 'a logistics firm operating in Colombia') # type of organisation monitoring
+ENTITY_OF_CONCERN = os.getenv('ENTITY_OF_CONCERN', 'a hostel') # type of organisation
 IDENTIFICATION_CONFIDENCE_THRESHOLD = int(os.getenv('IDENTIFICATION_CONFIDENCE_THRESHOLD', 95)) # percentage (0–100)
-
 
 
 # --------------------------------------------------
@@ -24,11 +26,11 @@ IDENTIFICATION_CONFIDENCE_THRESHOLD = int(os.getenv('IDENTIFICATION_CONFIDENCE_T
 # --------------------------------------------------
 
 SELENIUM_HEADLESS = True
-SELENIUM_WINDOW_SIZE = "1920,1080"
+SELENIUM_WINDOW_SIZE = '1920,1080'
 SELENIUM_USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/136.0.0.0 Safari/537.36"
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+    'AppleWebKit/537.36 (KHTML, like Gecko) '
+    'Chrome/136.0.0.0 Safari/537.36'
 )
 
 
@@ -41,6 +43,7 @@ LLM_RETRY_ATTEMPTS = int(os.getenv('LLM_RETRY_ATTEMPTS', 3)) # retries
 LLM_WAIT_TIME = int(os.getenv('LLM_WAIT_TIME', 10)) # seconds
 BASIC_MODEL = os.getenv('BASIC_MODEL', 'gemini-2.5-flash') # model type
 ADVANCED_MODEL = os.getenv('ADVANCED_MODEL', 'gemini-2.5-pro') # model type
+
 
 # --------------------------------------------------
 # Email

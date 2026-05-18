@@ -7,6 +7,7 @@ from eventsmonitor.scraping.selenium_fetcher import (
     quit_driver,
 )
 from eventsmonitor.scraping.generic_parser import generic_parser
+from eventsmonitor.scraping.visit_london_parser import visit_london_parser
 
 
 # ----------------------------------------------------------------------
@@ -21,12 +22,13 @@ logger = logging.getLogger(__name__)
 # ----------------------------------------------------------------------
 
 PARSERS = {
-    "generic_parser": generic_parser,
+    'generic_parser': generic_parser,
+    'visit_london_parser': visit_london_parser
 }
 
 
 # ----------------------------------------------------------------------
-# ORCHESTRATION FUNCTIONS
+# HELPER FUNCTIONS
 # ----------------------------------------------------------------------
 
 def extract_text(html, source):
@@ -39,6 +41,10 @@ def extract_text(html, source):
 
     return parser(html, source)
 
+
+# ----------------------------------------------------------------------
+# ORCHESTRATION FUNCTIONS
+# ----------------------------------------------------------------------
 
 def scrape_content(config):
     selenium_used = False
