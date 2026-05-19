@@ -1,8 +1,12 @@
 """
-Selenium fetcher module.
+Selenium page fetching utilities.
 
-Provides utility functions to scrape websites using 
-selenium for those that cannot be scraped using Requests.
+Provides helper functions for:
+- Chrome WebDriver initialization
+- dynamic page loading
+- safe driver shutdown
+
+Used for sources requiring JavaScript rendering.
 """
 
 import logging 
@@ -14,15 +18,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-# ----------------------------------------------------------------------
-# LOGGING SETUP
-# ----------------------------------------------------------------------
 logger = logging.getLogger(__name__)
 
-
-# ----------------------------------------------------------------------
-# HELPER FUNCTIONS
-# ----------------------------------------------------------------------
 
 def initialise_driver(config):
     """
@@ -47,6 +44,10 @@ def initialise_driver(config):
 
     options = Options()
 
+    # Use system-installed Chromium in containerized production environments
+    if config.ENVIRONMENT == 'production':
+        options.binary_location = '/usr/bin/chromium'
+
     if headless:
         options.add_argument('--headless=new')
 
@@ -55,9 +56,6 @@ def initialise_driver(config):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--disable-gpu')
-
-    if config.ENVIRONMENT == 'production':
-        options.binary_location = '/usr/bin/chromium'
 
     return webdriver.Chrome(options=options)
 
@@ -68,27 +66,37 @@ def load_page(driver, source):
 
     Args:
         driver: Active Selenium WebDriver instance.
-        source: Source configuration dictionary containing
-            page URL and scraping settings.
+        source: Single source configuration dictionary
+            containing page URL and scraping settings.
 
     Returns:
         str | None: Rendered page HTML if successful,
-        otherwise None.
+            otherwise None.
     """
-    try:
-        logger.info('Opening page url=%s', source['page_url'])
-        driver.get(source['page_url'])
+    page_url = source['page_url']
+    wait_seconds = source['scraping']['wait_seconds']
+    wait_selector = source['scraping']['wait_selector']
 
-        WebDriverWait(driver, source['scraping']['wait_seconds']).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, source['scraping']['wait_selector'] ))
+    try:
+        logger.info('Opening page url=%s', page_url)
+
+        driver.get(page_url)
+
+        WebDriverWait(driver, wait_seconds).until(
+            EC.presence_of_element_located(
+                (
+                    By.CSS_SELECTOR,
+                    wait_selector
+                )
+            )
         )
 
         return driver.page_source
     
     except Exception: 
         logger.warning(
-            'Error processing source url=%s',
-            source['page_url'],
+            'Error loading page url=%s',
+            page_url,
             exc_info=True
         )
         return None
@@ -102,4 +110,5 @@ def quit_driver(driver):
         driver: Active Selenium WebDriver instance.
     """
     logger.info('Closing Chrome driver')
+
     driver.quit()

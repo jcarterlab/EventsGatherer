@@ -25,8 +25,7 @@ logger = logging.getLogger(__name__)
 # ----------------------------------------------------------------------
 
 def run_pipeline(client, config):
-    text = scrape_content(config)
-    print(text)
+    text = scrape_content(config)    
     summary = summarise_content(client, text, config)
     send_email(summary, config.TO_EMAIL, config)
 
