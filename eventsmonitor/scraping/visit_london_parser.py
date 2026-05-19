@@ -39,7 +39,7 @@ def get_h2_count(content_div):
 # ORCHESTRATION FUNCTIONS
 # ----------------------------------------------------------------------
 
-def visit_london_parser(html): 
+def visit_london_parser(html, _source): 
     soup = BeautifulSoup(html, 'html.parser')
 
     content_div = soup.find('div', class_='cf content-body')

@@ -1,3 +1,10 @@
+"""
+Selenium fetcher module.
+
+Provides utility functions to scrape websites using 
+selenium for those that cannot be scraped using Requests.
+"""
+
 import logging 
 
 from selenium import webdriver
@@ -18,6 +25,16 @@ logger = logging.getLogger(__name__)
 # ----------------------------------------------------------------------
 
 def initialise_driver(config):
+    """
+    Create and configure a Chrome WebDriver instance.
+
+    Args:
+        config: Application configuration object containing
+            Selenium settings.
+
+    Returns:
+        webdriver.Chrome: Configured Chrome WebDriver instance.
+    """
     headless = config.SELENIUM_HEADLESS
     window_size = config.SELENIUM_WINDOW_SIZE
     user_agent = config.SELENIUM_USER_AGENT
@@ -46,6 +63,18 @@ def initialise_driver(config):
 
 
 def load_page(driver, source): 
+    """
+    Load a page and wait for the configured selector to appear.
+
+    Args:
+        driver: Active Selenium WebDriver instance.
+        source: Source configuration dictionary containing
+            page URL and scraping settings.
+
+    Returns:
+        str | None: Rendered page HTML if successful,
+        otherwise None.
+    """
     try:
         logger.info('Opening page url=%s', source['page_url'])
         driver.get(source['page_url'])
@@ -66,5 +95,11 @@ def load_page(driver, source):
     
 
 def quit_driver(driver):
+    """
+    Close the Chrome WebDriver instance safely.
+
+    Args:
+        driver: Active Selenium WebDriver instance.
+    """
     logger.info('Closing Chrome driver')
     driver.quit()
