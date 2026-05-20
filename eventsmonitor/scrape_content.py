@@ -1,5 +1,5 @@
 """
-Content scraping orchestration utilities.
+Content scraping module.
 
 Coordinates:
 - page fetching

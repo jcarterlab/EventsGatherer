@@ -19,6 +19,7 @@ logging.basicConfig(
 logging.getLogger('selenium').setLevel(logging.WARNING)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 logging.getLogger('httpcore').setLevel(logging.WARNING)
+logging.getLogger('google_genai').setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 

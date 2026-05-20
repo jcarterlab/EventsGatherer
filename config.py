@@ -17,7 +17,7 @@ load_dotenv()
 # --------------------------------------------------
 
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
-LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG').upper()
+LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO').upper()
 
 
 # --------------------------------------------------
@@ -55,8 +55,8 @@ SELENIUM_USER_AGENT = (
 # --------------------------------------------------
 
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-LLM_RETRY_ATTEMPTS = int(os.getenv('LLM_RETRY_ATTEMPTS', 3))
-LLM_WAIT_TIME = int(os.getenv('LLM_WAIT_TIME', 10))
+LLM_RETRY_ATTEMPTS = int(os.getenv('LLM_RETRY_ATTEMPTS', 4))
+LLM_WAIT_TIME = int(os.getenv('LLM_WAIT_TIME', 5))
 BASIC_MODEL = os.getenv('BASIC_MODEL', 'gemini-2.5-flash')
 ADVANCED_MODEL = os.getenv('ADVANCED_MODEL', 'gemini-2.5-pro')
 
