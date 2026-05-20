@@ -13,9 +13,12 @@ from eventsmonitor.summarise_content import summarise_content
 # ----------------------------------------------------------------------
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=config.LOG_LEVEL,
     format='%(asctime)s | %(levelname)s | %(name)s | %(message)s'
 )
+logging.getLogger('selenium').setLevel(logging.WARNING)
+logging.getLogger('urllib3').setLevel(logging.WARNING)
+logging.getLogger('httpcore').setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 

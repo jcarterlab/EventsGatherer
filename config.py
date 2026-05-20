@@ -16,7 +16,8 @@ load_dotenv()
 # Environment
 # --------------------------------------------------
 
-ENVIRONMENT = os.getenv('ENVIRONMENT', 'development') # development or production
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
+LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG').upper()
 
 
 # --------------------------------------------------
@@ -65,7 +66,7 @@ ADVANCED_MODEL = os.getenv('ADVANCED_MODEL', 'gemini-2.5-pro')
 # --------------------------------------------------
 
 RESEND_API_KEY = os.getenv('RESEND_API_KEY')
-FROM_EMAIL = os.getenv('FROM_EMAIL', 'onboarding@resend.dev')
+FROM_EMAIL = os.getenv('FROM_EMAIL') or 'onboarding@resend.dev'
 EMAIL_RETRY_ATTEMPTS = int(os.getenv('EMAIL_RETRY_ATTEMPTS', 3))
 EMAIL_WAIT_TIME = int(os.getenv('EMAIL_WAIT_TIME', 2))
 TO_EMAIL = os.getenv('TO_EMAIL')

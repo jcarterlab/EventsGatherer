@@ -1,43 +1,12 @@
 import logging
+
 import time
 
+from prompts.summary import v1
 
-# ----------------------------------------------------------------------
-# LOGGING SETUP
-# ----------------------------------------------------------------------
 
 logger = logging.getLogger(__name__)
 
-
-# ----------------------------------------------------------------------
-# PROMPT FUNCTIONS
-# ----------------------------------------------------------------------
-
-def build_events_text_summarisation_prompt(text, config):
-
-    location = config.LOCATION
-    entity = config.ENTITY_OF_CONCERN
-    threshold = config.IDENTIFICATION_CONFIDENCE_THRESHOLD
-
-    return f'''
-    You are a highly skilled analyst. 
-
-    I'm going to give you scraped article text concerning events in {location}.
-    I want you summarise the events which might be of interest to {entity}. 
-
-    Only include events you are at least {threshold}% sure are relevant. 
-        
-    This is the article text: 
-
-    <TEXT>
-    {text}
-    </TEXT>
-    '''
-
-
-# ----------------------------------------------------------------------
-# ORCHESTRATION FUNCTIONS
-# ----------------------------------------------------------------------
 
 def summarise_content(client, text, config):
 
@@ -45,7 +14,7 @@ def summarise_content(client, text, config):
     llm_wait_time = config.LLM_WAIT_TIME
     basic_model = config.BASIC_MODEL
 
-    prompt = build_events_text_summarisation_prompt(text, config)
+    prompt = v1.build_summary_prompt(text, config)
 
     response = client.models.generate_content(
         model=basic_model, 
